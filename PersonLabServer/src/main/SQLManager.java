@@ -112,10 +112,11 @@ public class SQLManager {
             List<UserDAO> result = (List<UserDAO>) query.list();
             if (result.isEmpty()) {
                 session.persist(user);
-            }
-            else{
                 newId = user.getId();
                 logger.info("Пользователь успешно создан, id#" + newId);
+            }
+            else{
+                logger.info("Ошибка добавления пользователя. Пользователь с таким логином уже есть!");
             }
             session.getTransaction().commit();
             session.close();

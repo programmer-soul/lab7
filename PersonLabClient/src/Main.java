@@ -32,7 +32,7 @@ public class Main {
                     System.out.println("Введите пароль");
                     String password = scanner.nextLine();
                     commands.setUserAuth(username,password);
-                    auth=commands.execute(client,"authenticate",false);
+                    auth=commands.execute(client,"authenticate onstart",false);
                 }
             } catch (IOException e) {
                 logger.log(Level.SEVERE,"Невозможно подключиться к серверу.", e);

@@ -14,11 +14,18 @@ public class Authenticate extends Command{
     @Override
     public boolean execute(String commandName,String parametr,boolean script) {
         if (parametr.isEmpty()){
-            return commands.sendCommandAndReceiveResponse(commandName,parametr);
+            commands.sendCommandAndReceiveResponse(commandName,parametr);
         }
         else
         {
-            System.out.println("У этой команды не должно быть параметров!");
+            if (parametr.equals("onstart")){
+                return commands.sendCommandAndReceiveResponse(commandName,"");
+            }
+            else
+            {
+                System.out.println("У этой команды не должно быть параметров!");
+            }
+
         }
         return false;
     }
