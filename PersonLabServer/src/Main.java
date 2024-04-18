@@ -18,7 +18,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 /**
  * Программа PersonLab Server
  * @author Matvei Baranov
- * @version 4.0
+ * @version 4.1
  */
 public class Main {
     public static Logger logger = Logger.getLogger("ServerLog");
@@ -34,15 +34,12 @@ public class Main {
                 sqlManager.addUser("testuser","test");
             }
             commands.load(sqlManager);
-            var server = new UDPDatagramServer(new InetSocketAddress(InetAddress.getLocalHost(), 25555), commands, sessionFactory, sqlManager,logger);
+            UDPDatagramServer server = new UDPDatagramServer(InetAddress.getLocalHost(), 25555, commands, sessionFactory, sqlManager,logger);
             System.out.println("Программа PersonLab Server. Ожидаем соединение.");
             server.run();
         } catch (UnknownHostException e) {
             System.out.println("Неизвестный хост");
             logger.log(Level.SEVERE,"Неизвестный хост", e);
-        } catch (SocketException e) {
-            System.out.println("Ошибка сокета");
-            logger.log(Level.SEVERE,"Ошибка сокета", e);
         }
     }
     private static SessionFactory getHibernateSessionFactory() {

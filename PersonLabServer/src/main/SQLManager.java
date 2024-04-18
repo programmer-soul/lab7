@@ -97,7 +97,7 @@ public class SQLManager {
         session.close();
         return result;
     }
-    public int addUser(String login, String password) {
+    public synchronized int addUser(String login, String password) {
         try{
             logger.info("Создание нового пользователя " + login);
             var newId = 0;
