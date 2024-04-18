@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.net.*;
 
 public class UDPDatagramServer implements Runnable{
-    private static final int COUNT_HANDLERS = 10;
+    private static final int CountHandlers = 10;
     private Commands commands;
     private SessionFactory sessionFactory;
     private SQLManager sqlManager;
@@ -31,9 +31,9 @@ public class UDPDatagramServer implements Runnable{
     public void run() {
         logger.info("Сервер запущен по адресу " + address+":"+port);
         ThreadPoolExecutor executorHandler = (ThreadPoolExecutor)Executors.newCachedThreadPool();
-        ThreadPoolExecutor executorReceiver = (ThreadPoolExecutor) Executors.newFixedThreadPool(COUNT_HANDLERS);
+        ThreadPoolExecutor executorReceiver = (ThreadPoolExecutor) Executors.newFixedThreadPool(CountHandlers);
         try{
-            for(int i=0;i<COUNT_HANDLERS;i++){
+            for(int i=0;i<CountHandlers;i++){
                 executorReceiver.execute(new UDPThreadReceiver(new InetSocketAddress(address, port+i),executorHandler,commands,sessionFactory,sqlManager,logger));
             }
         } catch (SocketException e) {

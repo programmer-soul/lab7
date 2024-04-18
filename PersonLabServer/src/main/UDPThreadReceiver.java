@@ -18,8 +18,8 @@ import java.net.*;
 import java.util.Arrays;
 
 public class UDPThreadReceiver implements Runnable {
-    private final int PACKET_SIZE = 1024;
-    private final int DATA_SIZE = PACKET_SIZE - 1;
+    private final int PacketSize = 1024;
+    private final int DataSize = PacketSize - 1;
     private ThreadPoolExecutor executorHandler;
     private Commands commands;
     private Logger logger;
@@ -101,8 +101,8 @@ public class UDPThreadReceiver implements Runnable {
         SocketAddress addr = null;
 
         while(!received) {
-            var data = new byte[PACKET_SIZE];
-            var dp = new DatagramPacket(data, PACKET_SIZE);
+            var data = new byte[PacketSize];
+            var dp = new DatagramPacket(data, PacketSize);
             try{
                 datagramSocket.receive(dp);
                 addr = dp.getSocketAddress();

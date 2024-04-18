@@ -16,8 +16,8 @@ import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 
 public class UDPThreadHandler implements Runnable {
-    private final int PACKET_SIZE = 1024;
-    private final int DATA_SIZE = PACKET_SIZE - 1;
+    private final int PacketSize = 1024;
+    private final int DataSize = PacketSize - 1;
     SocketAddress clientAddr;
     DatagramSocket datagramSocket;
     private Commands commands;
@@ -70,12 +70,12 @@ public class UDPThreadHandler implements Runnable {
         UDPsender.start();
     }
     public void sendData(byte[] data, SocketAddress addr) throws IOException {
-        byte[][] ret = new byte[(int)Math.ceil(data.length / (double)DATA_SIZE)][DATA_SIZE];
+        byte[][] ret = new byte[(int)Math.ceil(data.length / (double)DataSize)][DataSize];
 
         int start = 0;
         for(int i = 0; i < ret.length; i++) {
-            ret[i] = Arrays.copyOfRange(data, start, start + DATA_SIZE);
-            start += DATA_SIZE;
+            ret[i] = Arrays.copyOfRange(data, start, start + DataSize);
+            start += DataSize;
         }
 
         logger.info("Отправляется " + ret.length + " чанков...");
@@ -83,11 +83,11 @@ public class UDPThreadHandler implements Runnable {
             var chunk = ret[i];
             if (i == ret.length - 1) {
                 var lastChunk = Bytes.concat(chunk, new byte[]{1});
-                var dp = new DatagramPacket(lastChunk, PACKET_SIZE, addr);
+                var dp = new DatagramPacket(lastChunk, PacketSize, addr);
                 datagramSocket.send(dp);
                 logger.info("Последний чанк размером " + chunk.length + " отправлен на сервер.");
             } else {
-                var dp = new DatagramPacket(ByteBuffer.allocate(PACKET_SIZE).put(chunk).array(), PACKET_SIZE, addr);
+                var dp = new DatagramPacket(ByteBuffer.allocate(PacketSize).put(chunk).array(), PacketSize, addr);
                 datagramSocket.send(dp);
                 logger.info("Чанк размером " + chunk.length + " отправлен на сервер.");
             }
